@@ -27,7 +27,13 @@ module.exports.findBookById = function(id, callback) {
 };
 
 // find all book by name
-module.exports.findBookByGenre = function(genreName, callback) {
-    var query = { genre: genreName };
+module.exports.findBookByGenre = function(genres, callback) {
+    var query = { 
+        genre: {
+            $in: genres,
+        },
+        title:'book 1'
+    };
     Book.find(query, callback);
 };
+// find all book which has genre in a collection

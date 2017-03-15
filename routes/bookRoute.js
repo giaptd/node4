@@ -29,10 +29,11 @@ bookRoute.route('/:_id')
             res.json(book);
         });
     });
-bookRoute.route('/listbygenre/:genre')
+bookRoute.route('/listbygenres/:genres')
     .get(function(req, res) {
-        var genre = req.params.genre;
-        Book.findBookByGenre(genre, function(err, books) {
+        var genres = req.params.genres.split(',');
+        console.log(genres);
+        Book.findBookByGenre(genres, function(err, books) {
             if (err)
                 throw err;
             var titles = [];
