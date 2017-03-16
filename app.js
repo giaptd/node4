@@ -4,17 +4,17 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 const bookRouter = require('./routes/bookRoute');
-
+const customerRouter = require('./routes/customerRoute');
 app.use(bodyParser.json());
 
-app.use('/api/books/', bookRouter);
+app.use('/api/', bookRouter, customerRouter);
 // parse application/x-www-form-urlencoded
 //app.use(bodyParser.urlencoded({ extended: false }));
 
 
 Genre = require('./models/genre');
 Book = require('./models/book');
-
+Customer = require('./models/customer');
 const connectionString = 'mongodb://aaadmin:pass_word@ds056998.mlab.com:56998/giaptddemo';
 // connect to database
 mongoose.connect(connectionString);

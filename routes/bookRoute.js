@@ -1,7 +1,7 @@
 const express = require('express');
 const bookRoute = express.Router();
 
-bookRoute.route('/')
+bookRoute.route('/books')
     .get(function(req, res) {
         Book.getBooks(function(err, books) {
             if (err)
@@ -19,7 +19,7 @@ bookRoute.route('/')
             res.json(book);
         });
     });
-bookRoute.route('/:_id')
+bookRoute.route('/books/:_id')
     .get(function(req, res) {
         var _id = req.params._id;
         console.log('get book detail with id:' + _id);
@@ -29,7 +29,7 @@ bookRoute.route('/:_id')
             res.json(book);
         });
     });
-bookRoute.route('/listbygenres/:genres')
+bookRoute.route('/books/listbygenres/:genres')
     .get(function(req, res) {
         var genres = req.params.genres.split(',');
         console.log(genres);
@@ -46,6 +46,14 @@ bookRoute.route('/listbygenres/:genres')
             };
             res.json(result);
         });
+    });
+bookRoute.route('/search')
+    .post(function(req, res) {
+        var searchKeys = req.body;
+        res.json(searchKeys);
+    })
+    .get(function(req, res) {
+        res.json('should not see this');
     });
 
 module.exports = bookRoute;

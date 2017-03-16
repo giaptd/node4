@@ -1,6 +1,0 @@
-{
-    "env": {
-        "mongo": true,
-        "node": true
-    }
-}
