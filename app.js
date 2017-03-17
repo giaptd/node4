@@ -1,11 +1,28 @@
 var express = require('express');
 var app = express();
+var path = require('path');
 var bodyParser = require('body-parser');
+// file upload
+var multer = require('multer');
+var upload = multer({
+    storage: multer.diskStorage({
+        destination: './public/images',
+        filename: function(req, file, cb) {
+            cb(null, (Math.random().toString(36) + '00000000000000000').slice(2, 10) + Date.now() + path.extname(file.originalname));
+        }
+    }),
+    limits: {
+        files: 1,
+        fileSize: 2 * 1024 * 1024 // 2mb, in bytes
+    }
+});
+
 var mongoose = require('mongoose');
 
 const bookRouter = require('./routes/bookRoute');
 const customerRouter = require('./routes/customerRoute');
 app.use(bodyParser.json());
+//app.use(upload);
 
 app.use('/api/', bookRouter, customerRouter);
 // parse application/x-www-form-urlencoded
@@ -77,6 +94,11 @@ app.delete('/api/genres/:_id', function(req, res) {
     });
 });
 
+app.post('/api/uploadimage', upload.single('imgfile'), function(req, res, next) {
+    console.log(req.body); // form fields
+    console.log(req.file); // form files
+    res.status(204).end();
+});
 
 app.listen(4000);
 console.log('running on port 4000');
